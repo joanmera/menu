@@ -1,0 +1,336 @@
+package final7.pkg1;
+
+import java.util.Scanner;
+
+
+public class Final71 {
+
+  
+    public static void main(String[] args) {
+         programaempleado();
+        
+    }
+
+    public static void menusito() {
+       //se utiliza \n para dar mejor formato y utilizar una sola linea de impresion
+       System.out.println("-----------------------------------------------------------");//lineas para mas formato
+       System.out.println("(1) Ingresar Empleado"+"\n"+"(2) Mostrar Datos"+"\n"+"(3) Calcular la Edad"+"\n"+"(4) Calcular antiguedad en la PUCE"+"\n"+"(5) Calcular prestaciones"+"\n"+"(6) Aumentar Salario"+"\n"+"(7) Eliminar Empleado"+"\n"+"(8) Salir del programa");
+       System.out.println("-----------------------------------------------------------");
+    }
+    
+  
+    public static void programaempleado(){
+        int opcion = 0, edad;                       //declaramos las variables que vamos a necesitar 
+        String nombre = "", apellido = "";
+        Scanner src = new Scanner(System.in);
+        float aumentosalario=0;
+        float decimotercero =0;
+        float decimocuarto=0;
+        float bonosueldo =0;
+        float salario =0;
+        int[] fecha = new int[3];           //creamos los arreglos de fecha y ingreso
+        int[] ingreso = new int[3];
+        int fechaingresomes, fechaingresoanio= 0; //creamos las variables de fechas de ingreso
+        fechaingresoanio = 2023 - ingreso[2];//planteamos la operacion para que nos calcule la fecha de ingreso 
+
+        boolean empleadoIngresado = false;//se declara la variable booleana empleadoIngresado y se inicializa con el valor false. Esto significa que al inicio,aun no se ha ingresado ningún empleado. 
+
+        System.out.println("Bienvenido al Sistema de empleados PUCE\n");
+        //Se inicia un bucle do while que se repetira hasta que la opcion ingresada sea igual a 8 (salir del programa)
+        do {
+        menusito();
+        System.out.println();
+        System.out.print("Por favor selecciona una de las opciones para continuar: ");
+        
+        //En cada iteración del bucle se muestra el menú,y le pide al usuario que elija una opcion.
+        
+        try {
+            opcion = src.nextInt(); //antes de leer la opcion, nos aseguramos de manejar las excepciones en caso de que el usuario ingrese un valor que no sea numérico.
+        } catch (Exception e) {
+            System.out.println("Error: Ingresa un valor numerico valido.");
+            System.out.println();
+            src.nextLine(); // Limpiamos el búfer de entrada,se descarta cualquier entrada adicional que pueda haber quedado en el buffer después de una lectura incorrecta. Esto asegura que la próxima lectura de datos desde el teclado se realice correctamente.
+             continue; // Vuelve al inicio del bucle
+        }
+        
+            switch (opcion) {
+                case 1:{//caso 1 registo del empleado 
+                 empleadoIngresado = true;/* se le asigna a la variable empleadoingresado true para indicar que se ha ingresado un empleado al programa.
+                 y asi la variable se modifique para los case siguientes, 
+                 solo es necesario asignarle true a esta variable en este case porque es en el case 1 donde se realiza el registro del empleado
+                 y lo que queremos es que no se ejecute nigun otro case hasta que se haya hecho el 1. 
+                 una vez que empleadoIngresado se establece en true, su valor se mantiene para el resto del programa*/
+                 
+                System.out.println();
+                System.out.println("Por favor ingresa los siguientes datos: "); //se ingresan los datos
+                
+                
+                //nombres y apellidos
+                System.out.print("Nombre: ");nombre= src.next();
+                System.out.print("Apellido: ");apellido= src.next();
+                //fecha de nacimiento 
+                      do { //repetir
+                       try {
+                           System.out.println("Ingresa la fecha de nacimiento dd/mm/aaaa");
+                           System.out.print("Ingresa el dia: ");
+                           fecha[0] = src.nextInt();
+
+                           if (fecha[0] < 1 || fecha[0] > 31) {
+                               System.out.println("Dia no valido. Ingresa un dia entre 1 y 31.");
+                           }
+                            } catch (Exception e) {
+                                System.out.println("Error: Ingresa un valor numerico valido.");
+                                src.nextLine(); /* Limpiamos el búfer de entrada,si no se hace,el programa volverá a intentar leer un entero para el día, 
+                                pero como el error todavía está en el búfer, seguirá generándose la misma excepción una y otra vez, 
+                                provocando un bucle infinito de errores sin permitir al usuario corregir la entrada.*/ 
+                            }
+                          } while (fecha[0] < 1 || fecha[0] > 31);//Mientras el dia no sea valido
+                            
+                              
+                      do {
+                       try {
+                           System.out.print("Ingresa el mes: ");
+                           fecha[1] = src.nextInt();
+
+                           if (fecha[1] < 1 || fecha[1] > 12) {
+                               System.out.println("Mes no valido. Ingresa un mes entre 1 y 12.");
+                           }
+                            } catch (Exception e) {
+                                System.out.println("Error: Ingresa un valor numerico valido.");
+                                src.nextLine(); // Limpiamos el búfer de entrada
+                            }
+                          } while (fecha[1] < 1 || fecha[1] > 12); // Repetir el bucle mientras el mes no sea válido
+                         
+
+
+                    do {
+                       try {
+                           System.out.print("Ingresa el anio: ");
+                           fecha[2] = src.nextInt();
+
+                           if (fecha[2] < 1950 || fecha[2] > 2023) {
+                               System.out.println("Anio no valido. Ingresa un anio de 4 cifras no mayor a 2023.");
+                           }
+                       } catch (Exception e) {
+                           System.out.println("Error: Ingresa un valor numerico valido.");
+                           src.nextLine(); // Limpiamos el búfer de entrada
+                       }
+                   } while (fecha[2] < 1950 || fecha[2] > 2023); // Repetir el bucle mientras el año no sea válido
+                    
+
+                   //fecha de ingreso Puce 
+                   // Bucle para pedir la fecha de ingreso a la PUCE hasta que sea válida
+                   do {
+                       try {
+                           System.out.println("Ingresa la fecha de entrada a la PUCE");
+                           System.out.print("Ingresa el dia: ");
+                           ingreso[0] = src.nextInt();
+
+                           if (ingreso[0] < 1 || ingreso[0] > 31) {
+                               System.out.println("Dia no valido. Ingresa un dia entre 1 y 31.");
+                           }
+                       } catch (Exception e) {
+                           System.out.println("Error: Ingresa un valor numerico valido.");
+                           src.nextLine(); // Limpiamos el búfer de entrada
+                       }
+                      } while (ingreso[0] < 1 || ingreso[0] > 31); // Repetir el bucle mientras el día de ingreso a la PUCE no sea válido
+                        
+                   do {
+                       try {
+                           System.out.print("Ingresa el mes: ");
+                           ingreso[1] = src.nextInt();
+
+                           if (ingreso[1] < 1 || ingreso[1] > 12) {
+                               System.out.println("Mes no valido. Ingresa un mes entre 1 y 12.");
+                           }
+                       } catch (Exception e) {
+                           System.out.println("Error: Ingresa un valor numerico valido.");
+                           src.nextLine(); // Limpiamos el búfer de entrada
+                       }
+                   } while (ingreso[1] < 1 || ingreso[1] > 12); // Repetir el bucle mientras el mes de ingreso a la PUCE no sea válido
+                     
+                   do {
+                       try {
+                           System.out.print("Ingresa el anio: ");
+                           ingreso[2] = src.nextInt();
+
+                           if (ingreso[2] < 1950 || ingreso[2] > 2023) {
+                               System.out.println("Anio no valido. Ingresa un año de 4 cifras no mayor a 2023.");
+                           }
+                       } catch (Exception e) {
+                           System.out.println("Error: Ingresa un valor numerico valido.");
+                           src.nextLine(); // Limpiamos el búfer de entrada
+                       }
+                      } while (ingreso[2] < 1950 || ingreso[2] > 2023); // Repetir el bucle mientras el año de ingreso a la PUCE no sea válido
+                        
+                        
+                       //ingreso salario y remuneraciones
+                       do {
+                       try {
+                           System.out.println();
+                           System.out.print("Ingresa tu salario: ");
+                           salario = src.nextFloat();
+
+                           System.out.print("Ingresa las remuneraciones extras que recibes: ");
+                           bonosueldo = src.nextFloat();
+                           System.out.println(); //salto de línea
+                            } catch (Exception e) {
+                                System.out.println("Error: Ingresa un valor numerico valido.");
+                                src.nextLine(); // Limpiamos el búfer de entrada
+                                bonosueldo=0; //Es importante reiniciar salario y bonosueldo a 0 dentro del bloque catch, para que el bucle tenga la oportunidad de volver a solicitar los valores correctos para estas variables en caso de errores de entrada.
+                                salario=0;
+                            }
+                         } while (salario <= 0 || bonosueldo < 0); // Repetir el bucle mientras el salario o el bono sueldo no sean válidos
+                    
+                 
+                 
+                
+                break;
+                }
+                case 2:{
+                    if (empleadoIngresado) {/*se evalua el valor de la variable empleadoIngresado como una condición booleana a la que anteriormente le dimos el valor de true en el case 1, 
+                        no es necesario poner empleadoIngresado=true porque la condición dentro de un if debe ser una expresión booleana y empleadoIngresado ya lo es.
+                        Si la expresión es true se ejecuta el bloque de código dentro del if; de lo contrario, va al else*/
+                        System.out.println();
+                        System.out.println("Tus datos son los siguientes: "); //se imprimen los valores dentro de las variables
+                        System.out.println("Nombre: " + nombre);
+                        System.out.println("Apellido: " + apellido);
+                        System.out.print("La fecha de nacimiento es: " + fecha[0] + "/" + fecha[1] + "/" + fecha[2]);
+                        System.out.println();//salto de linea
+                        System.out.print("La fecha de ingreso a la Puce es: " + ingreso[0] + "/" + ingreso[1] + "/" + ingreso[2]);
+                        System.out.println();//salto de linea
+                        System.out.print("Tu salario es: "+salario);
+                        System.out.println();//salto de linea
+                        System.out.print("Tus remuneraciones son: "+bonosueldo);
+                        System.out.println();//salto de linea
+                        System.out.println();//salto de linea
+
+                    } else { //en caso de que la variable nunca haya sido modificada a true(no haya pasado por el case 1)se ejecutara este mensaje
+                        System.out.println("Necesita ingresar a un empleado primero para acceder a esta funcion");
+                        System.out.println(); //salto de linea
+                    }
+                    break;
+                }
+                case 3:{
+                    if (empleadoIngresado) {
+                        edad = 2023 - fecha[2]; //la edad sera el anio actual menos la posicion 2 del array porque ahi se almaceno el anio
+                        System.out.println("Tu edad actual es: " + edad);
+                        System.out.println();//salto de linea
+                    } else {
+                        System.out.println("Necesita ingresar a un empleado primero para acceder a esta funcion");
+                        System.out.println(); //salto de linea
+                    }
+                    break;
+                }
+                case 4:{
+                    if (empleadoIngresado) {
+                        fechaingresomes = 12 - ingreso[1]; //12 es la cantidad de meses y el arreglo [1] almacena el mes que ingreso
+                        fechaingresoanio = 2023 - ingreso[2]; //2023 es el anio actual y el arreglo [2] almacena el anio que ingreso
+                        System.out.println("Llevas " + fechaingresomes + " meses y " + fechaingresoanio + " anios en la Puce");
+                        System.out.println(); //salto de linea
+                    } else {
+                        System.out.println("Necesita ingresar a un empleado primero para acceder a esta funcion");
+                        System.out.println(); //salto de linea
+                    }
+                    break;
+                }
+                case 5:{
+                    if (empleadoIngresado) {
+                        //variables y calculos para los decimos
+                        
+                        if(fechaingresoanio>1){
+                        
+                        decimocuarto = salario;//el decimocuarto es otro sueldo que recibes despues de un anio trabajando
+                        decimotercero = (salario+bonosueldo)/12;
+                        //imprimir decimos
+                        System.out.print("Tu decimo Cuarto sueldo es: " +decimocuarto); //se imprimen los valores de las variables correspondientes
+                        System.out.println();
+                        System.out.print("Tu decimo tercer sueldo es: " +decimotercero);
+                        System.out.println();
+                        System.out.println(); 
+                        }
+                        
+                        else if(fechaingresoanio<1) { //en caso de que el empleado no cumpla un año en la empresa saltara este mensaje
+                            System.out.println();  //salto de linea
+                            System.out.println("Los decimos no estan disponibles debido a tu tiempo trabajado en la Puce");
+                        }
+                    } else {                    //mensaje en caso de aceder a esta opción sin un empleado
+                        System.out.println("Necesita ingresar a un empleado primero para acceder a esta funcion");
+                        System.out.println(); //salto de linea
+                    }
+                    break;
+                }
+                case 6:{
+                    if (empleadoIngresado) {
+                        // Lógica para aumentar el salario
+                        
+                        System.out.println("Salario actual: $"+salario);
+                        
+                        do {
+                            try {
+                                System.out.print("Ingrese el aumento del salario a recibir:"); //se recibe el aumento al salario (la cantidad que se va a sumar al salario actual)
+                                aumentosalario = src.nextInt();
+                            } catch (Exception e) { //mensaje de error en caso de ingresar una excepcion
+                                System.out.println("Error: Ingresa un valor numerico valido.");
+                                src.nextLine(); // Limpiamos el búfer de entrada
+                            }
+                        } while (aumentosalario <= 0); // Repetir el bucle mientras el aumento de salario no sea válido
+
+                        salario=salario+aumentosalario; //actualizar la variable salario + el aumento recibido
+                        System.out.println("Salario aumentado a: $"+salario+" exitosamente");
+                        System.out.println();
+                    } else {
+                        System.out.println("Necesita ingresar a un empleado primero para acceder a esta funcion");
+                        System.out.println();
+                    }
+                    break;
+                }
+                case 7:{
+                    if (empleadoIngresado) {
+                        // Lógica para eliminar el empleado
+                       
+                        nombre = "";
+                        apellido = "";
+                        fecha[0]= 0;        //basicamente reiniciamos todas las variables
+                        fecha[1]= 0;
+                        fecha[2]= 0;
+                        
+                        ingreso[0]=0;
+                        ingreso[1]=0;
+                        ingreso[2]=0;
+                        
+                        aumentosalario=0;
+                        decimotercero =0;
+                        decimocuarto=0;
+                        bonosueldo =0;
+                        salario =0;
+                        
+                        fechaingresoanio= 0;
+                        fechaingresomes=0;
+                        System.out.println(); //mensaje en caso de ejecución exitosa
+                        System.out.println("Eliminando empleado...");
+                        System.out.println("El empleado ha sido eliminado con exito");
+                        System.out.println();
+                        
+                    } else {
+                        System.out.println("Necesita ingresar a un empleado primero para acceder a esta funcion");
+                        System.out.println();
+                    }
+                    break;
+                }
+                case 8:{        //salida del programa
+                    System.out.println("Saliendo del programa...");
+                    break;
+                }
+                default:{/*se ejecuta cuando ninguno de los case anteriores coincide con el valor ingresado en opcion*/
+                    System.out.println("Opcion invalida. Por favor selecciona una opcion valida.");
+                    System.out.println();
+                    break;
+                }
+            }
+        } while (opcion != 8);
+        
+             src.close();
+        }
+        
+    }
